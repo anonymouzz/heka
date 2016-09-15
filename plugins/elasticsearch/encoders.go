@@ -281,7 +281,7 @@ func (e *ESJsonEncoder) ConfigStruct() interface{} {
 	config := &ESJsonEncoderConfig{
 		Index:                "heka-%{%Y.%m.%d}",
 		TypeName:             "message",
-		Timestamp:            "%Y-%m-%dT%H:%M:%S",
+		Timestamp:            "2006-01-02T15:04:05.000Z",
 		ESIndexFromTimestamp: false,
 		Id:                   "",
 		FieldMappings: &ESFieldMappings{
@@ -352,7 +352,7 @@ func (e *ESJsonEncoder) Encode(pack *PipelinePack) (output []byte, err error) {
 			writeStringField(first, &buf, e.fieldMappings.Uuid, m.GetUuidString())
 		case "timestamp":
 			t := time.Unix(0, m.GetTimestamp()).UTC()
-			writeStringField(first, &buf, e.fieldMappings.Timestamp, gostrftime.Strftime(e.timestampFormat, t))
+			writeStringField(first, &buf, e.fieldMappings.Timestamp, t.Format(e.timestampFormat))
 		case "type":
 			writeStringField(first, &buf, e.fieldMappings.Type, m.GetType())
 		case "logger":

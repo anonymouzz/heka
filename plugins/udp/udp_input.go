@@ -23,7 +23,7 @@ import (
 	"strconv"
 	"strings"
 
-	. "github.com/mozilla-services/heka/message"
+	//	. "github.com/mozilla-services/heka/message"
 	. "github.com/mozilla-services/heka/pipeline"
 )
 
@@ -53,7 +53,7 @@ type UdpInputConfig struct {
 // Wrap ReadFrom into Read and set Hostname
 type UdpInputReader struct {
 	listener *net.UDPConn
-	input *UdpInput
+	input    *UdpInput
 }
 
 func (u *UdpInput) ConfigStruct() interface{} {
@@ -123,7 +123,7 @@ func (u *UdpInput) Init(config interface{}) (err error) {
 			return fmt.Errorf("ListenUDP failed: %s\n", err.Error())
 		}
 		if u.config.SetHostname {
-			u.reader = UdpInputReader {
+			u.reader = UdpInputReader{
 				u.listener.(*net.UDPConn),
 				u,
 			}
